@@ -19,7 +19,7 @@ AuthStatus (steamid:12345678901234567):  OK  (OK)
 
 \---
 
-![Screenshot](http://i.imgur.com/KfnFQrX.jpg)
+!\[Screenshot](http://i.imgur.com/KfnFQrX.jpg)
 
 ### nSkinz
 
