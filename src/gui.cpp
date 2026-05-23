@@ -1,4 +1,4 @@
-/* This file is part of nSkinz by namazso, licensed under the MIT license:
+﻿/* This file is part of nSkinz by namazso, licensed under the MIT license:
 *
 * MIT License
 *
@@ -74,14 +74,14 @@ void draw_gui()
 
 			const auto button_size = ImVec2(ImGui::GetColumnWidth() / 2 - 12.5f, 31);
 
-			if(ImGui::Button("Add", button_size))
+			if(ImGui::Button("添加", button_size))
 			{
 				entries.push_back(item_setting());
 				selected_id = entries.size() - 1;
 			}
 			ImGui::SameLine();
 
-			if(ImGui::Button("Remove", button_size) && entries.size() > 1)
+			if(ImGui::Button("移除", button_size) && entries.size() > 1)
 				entries.erase(entries.begin() + selected_id);
 
 			ImGui::PopItemWidth();
@@ -95,17 +95,17 @@ void draw_gui()
 
 		{
 			// Name
-			ImGui::InputText("Name", selected_entry.name, 32);
+			ImGui::InputText("名称", selected_entry.name, 32);
 
 			// Item to change skins for
-			ImGui::Combo("Item", &selected_entry.definition_vector_index, [](void* data, int idx, const char** out_text)
+			ImGui::Combo("物品", &selected_entry.definition_vector_index, [](void* data, int idx, const char** out_text)
 			{
 				*out_text = game_data::weapon_names[idx].name;
 				return true;
 			}, nullptr, game_data::weapon_names.size(), 5);
 
 			// Enabled
-			ImGui::Checkbox("Enabled", &selected_entry.enabled);
+			ImGui::Checkbox("启用", &selected_entry.enabled);
 
 			// User ID
 			char tmp[33];
@@ -119,18 +119,18 @@ void draw_gui()
 			selected_entry.xuid_hi = (int)(uint32_t)(xuid >> 32);
 
 			// Pattern Seed
-			ImGui::InputInt("Seed", &selected_entry.seed);
+			ImGui::InputInt("种子", &selected_entry.seed);
 
 			// Custom StatTrak number
 			ImGui::InputInt("StatTrak", &selected_entry.stat_trak);
 
 			// Wear Float
-			ImGui::SliderFloat("Wear", &selected_entry.wear, FLT_MIN, 1.f, "%.10f", 5);
+			ImGui::SliderFloat("磨损", &selected_entry.wear, FLT_MIN, 1.f, "%.10f", 5);
 
 			// Paint kit
 			if(selected_entry.definition_index != GLOVE_T_SIDE)
 			{
-				ImGui::Combo("Paint Kit", &selected_entry.paint_kit_vector_index, [](void* data, int idx, const char** out_text)
+				ImGui::Combo("涂装", &selected_entry.paint_kit_vector_index, [](void* data, int idx, const char** out_text)
 				{
 					*out_text = game_data::skin_kits[idx].name.c_str();
 					return true;
@@ -138,7 +138,7 @@ void draw_gui()
 			}
 			else
 			{
-				ImGui::Combo("Paint Kit", &selected_entry.paint_kit_vector_index, [](void* data, int idx, const char** out_text)
+				ImGui::Combo("涂装", &selected_entry.paint_kit_vector_index, [](void* data, int idx, const char** out_text)
 				{
 					*out_text = game_data::glove_kits[idx].name.c_str();
 					return true;
@@ -146,7 +146,7 @@ void draw_gui()
 			}
 
 			// Quality
-			ImGui::Combo("Quality", &selected_entry.entity_quality_vector_index, [](void* data, int idx, const char** out_text)
+			ImGui::Combo("品质", &selected_entry.entity_quality_vector_index, [](void* data, int idx, const char** out_text)
 			{
 				*out_text = game_data::quality_names[idx].name;
 				return true;
@@ -158,7 +158,7 @@ void draw_gui()
 			// Item defindex override
 			if(selected_entry.definition_index == WEAPON_KNIFE)
 			{
-				ImGui::Combo("Knife", &selected_entry.definition_override_vector_index, [](void* data, int idx, const char** out_text)
+				ImGui::Combo("匕首", &selected_entry.definition_override_vector_index, [](void* data, int idx, const char** out_text)
 				{
 					*out_text = game_data::knife_names.at(idx).name;
 					return true;
@@ -166,7 +166,7 @@ void draw_gui()
 			}
 			else if(selected_entry.definition_index == GLOVE_T_SIDE)
 			{
-				ImGui::Combo("Glove", &selected_entry.definition_override_vector_index, [](void* data, int idx, const char** out_text)
+				ImGui::Combo("手套", &selected_entry.definition_override_vector_index, [](void* data, int idx, const char** out_text)
 				{
 					*out_text = game_data::glove_names.at(idx).name;
 					return true;
@@ -177,13 +177,13 @@ void draw_gui()
 				// We don't want to override weapons other than knives or gloves
 				static auto unused_value = 0;
 				selected_entry.definition_override_vector_index = 0;
-				ImGui::Combo("Unavailable", &unused_value, "For knives or gloves\0");
+				ImGui::Combo("不可用", &unused_value, "对匕首和手套\0");
 			}
 
 			selected_entry.update<sync_type::KEY_TO_VALUE>();
 
 			// Custom Name tag
-			ImGui::InputText("Name Tag", selected_entry.custom_name, 32);
+			ImGui::InputText("改名卡", selected_entry.custom_name, 32);
 		}
 
 		ImGui::NextColumn();
@@ -195,7 +195,7 @@ void draw_gui()
 		{
 			ImGui::Columns(2, nullptr, false);
 
-			ImGui::PushID("sticker");
+			ImGui::PushID("贴纸");
 
 			static auto selected_sticker_slot = 0;
 
@@ -215,17 +215,17 @@ void draw_gui()
 
 			ImGui::NextColumn();
 
-			ImGui::Combo("Sticker Kit", &selected_sticker.kit_vector_index, [](void* data, int idx, const char** out_text)
+			ImGui::Combo("印花", &selected_sticker.kit_vector_index, [](void* data, int idx, const char** out_text)
 			{
 				*out_text = game_data::sticker_kits.at(idx).name.c_str();
 				return true;
 			}, nullptr, game_data::sticker_kits.size(), 10);
 
-			ImGui::SliderFloat("Wear", &selected_sticker.wear, FLT_MIN, 1.f, "%.10f", 5);
+			ImGui::SliderFloat("磨损", &selected_sticker.wear, FLT_MIN, 1.f, "%.10f", 5);
 
-			ImGui::SliderFloat("Scale", &selected_sticker.scale, 0.1f, 5.f, "%.3f");
+			ImGui::SliderFloat("缩放", &selected_sticker.scale, 0.1f, 5.f, "%.3f");
 
-			ImGui::SliderFloat("Rotation", &selected_sticker.rotation, 0.f, 360.f);
+			ImGui::SliderFloat("旋转", &selected_sticker.rotation, 0.f, 360.f);
 
 			ImGui::NextColumn();
 
@@ -244,18 +244,18 @@ void draw_gui()
 		{
 			const auto button_size = ImVec2(ImGui::GetColumnWidth() - 1, 20);
 
-			if(ImGui::Button("Update", button_size))
+			if(ImGui::Button("更新", button_size))
 				(*g_client_state)->ForceFullUpdate();
 				//g_engine->ClientCmd_Unrestricted("record x;stop"); //this will be changed at a later date.		
 
 
 			ImGui::NextColumn();
 
-			if(ImGui::Button("Save", button_size))
+			if(ImGui::Button("保存", button_size))
 				g_config.save();
 			ImGui::NextColumn();
 
-			if(ImGui::Button("Load", button_size))
+			if(ImGui::Button("加载", button_size))
 				g_config.load();
 			ImGui::NextColumn();
 		}
